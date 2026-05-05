@@ -50,6 +50,26 @@ const faqs = [
 ];
 
 const Index = () => {
+  useEffect(() => {
+    const data = {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      mainEntity: faqs.map((f) => ({
+        "@type": "Question",
+        name: f.q,
+        acceptedAnswer: { "@type": "Answer", text: f.a },
+      })),
+    };
+    const script = document.createElement("script");
+    script.type = "application/ld+json";
+    script.id = "faq-jsonld";
+    script.text = JSON.stringify(data);
+    document.head.appendChild(script);
+    return () => {
+      document.getElementById("faq-jsonld")?.remove();
+    };
+  }, []);
+
   return (
     <>
       <Preloader />
