@@ -239,6 +239,36 @@ const Index = () => {
           </div>
         </section>
 
+        {/* FAQ */}
+        <section id="faq" className="border-t border-border bg-secondary/40 py-24 md:py-32">
+          <div className="container-edge grid gap-12 md:grid-cols-12 md:gap-16">
+            <Reveal className="md:col-span-5">
+              <span className="eyebrow">Perguntas frequentes</span>
+              <h2 className="mt-4 font-display text-3xl font-bold leading-tight md:text-5xl">
+                Direto ao que você quer saber.
+              </h2>
+              <p className="mt-6 text-base text-muted-foreground">
+                Se a resposta não estiver aqui, manda no WhatsApp. Eu respondo.
+              </p>
+            </Reveal>
+
+            <Reveal delay={0.15} className="md:col-span-7">
+              <Accordion type="single" collapsible className="w-full">
+                {faqs.map((f, i) => (
+                  <AccordionItem key={f.q} value={`item-${i}`} className="border-border">
+                    <AccordionTrigger className="text-left font-display text-lg font-semibold hover:text-amber hover:no-underline md:text-xl">
+                      {f.q}
+                    </AccordionTrigger>
+                    <AccordionContent className="text-base leading-relaxed text-muted-foreground">
+                      {f.a}
+                    </AccordionContent>
+                  </AccordionItem>
+                ))}
+              </Accordion>
+            </Reveal>
+          </div>
+        </section>
+
         {/* CONTATO FINAL */}
         <section id="contato" className="bg-ink py-24 text-primary-foreground md:py-36">
           <div className="container-edge">
