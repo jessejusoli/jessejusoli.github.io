@@ -1,8 +1,10 @@
 import { motion } from "framer-motion";
+import { useEffect } from "react";
 import { Globe, PenLine, Workflow, Compass, MapPin, Phone } from "lucide-react";
 import { Preloader } from "@/components/Preloader";
 import { Reveal } from "@/components/Reveal";
 import { WhatsAppButton, getWhatsAppLink } from "@/components/WhatsAppButton";
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 
 const services = [
   { icon: Globe, title: "Site", desc: "Página que vende sem ruído. Clara, rápida, com um único caminho." },
@@ -22,6 +24,29 @@ const filters = [
   "Quem perde cliente por falta de processo",
   "Quem precisa de site, copy ou automação ontem",
   "Quem quer clareza, não mais opinião",
+];
+
+const faqs = [
+  {
+    q: "Como funciona o primeiro contato?",
+    a: "Você manda uma mensagem no WhatsApp com o que travou. Em poucas horas devolvo um diagnóstico curto e o próximo passo claro — sem reunião obrigatória.",
+  },
+  {
+    q: "Em quanto tempo a entrega fica pronta?",
+    a: "Depende do escopo. A maioria dos destravos (site enxuto, copy ou automação pontual) sai entre 5 e 15 dias úteis, com data combinada na proposta.",
+  },
+  {
+    q: "Quanto custa?",
+    a: "Cada projeto tem um valor sob medida em função do escopo e do prazo. Mando uma proposta objetiva, sem pacotes inflados, depois de entender o que precisa ser destravado.",
+  },
+  {
+    q: "Você atende fora de Guarulhos e São Paulo?",
+    a: "Sim. Atendo todo o Brasil de forma remota via WhatsApp, e-mail e chamadas pontuais. O endereço físico é em Guarulhos (SP).",
+  },
+  {
+    q: "Você executa ou só entrega o plano?",
+    a: "Os dois. Posso entregar só o plano (mapa do próximo passo) ou executar site, copy e automação junto. Você decide o nível de envolvimento.",
+  },
 ];
 
 const Index = () => {
