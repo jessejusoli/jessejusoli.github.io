@@ -1,8 +1,10 @@
 import { motion } from "framer-motion";
+import { useEffect } from "react";
 import { Globe, PenLine, Workflow, Compass, MapPin, Phone } from "lucide-react";
 import { Preloader } from "@/components/Preloader";
 import { Reveal } from "@/components/Reveal";
 import { WhatsAppButton, getWhatsAppLink } from "@/components/WhatsAppButton";
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 
 const services = [
   { icon: Globe, title: "Site", desc: "Página que vende sem ruído. Clara, rápida, com um único caminho." },
@@ -24,7 +26,50 @@ const filters = [
   "Quem quer clareza, não mais opinião",
 ];
 
+const faqs = [
+  {
+    q: "Como funciona o primeiro contato?",
+    a: "Você manda uma mensagem no WhatsApp com o que travou. Em poucas horas devolvo um diagnóstico curto e o próximo passo claro — sem reunião obrigatória.",
+  },
+  {
+    q: "Em quanto tempo a entrega fica pronta?",
+    a: "Depende do escopo. A maioria dos destravos (site enxuto, copy ou automação pontual) sai entre 5 e 15 dias úteis, com data combinada na proposta.",
+  },
+  {
+    q: "Quanto custa?",
+    a: "Cada projeto tem um valor sob medida em função do escopo e do prazo. Mando uma proposta objetiva, sem pacotes inflados, depois de entender o que precisa ser destravado.",
+  },
+  {
+    q: "Você atende fora de Guarulhos e São Paulo?",
+    a: "Sim. Atendo todo o Brasil de forma remota via WhatsApp, e-mail e chamadas pontuais. O endereço físico é em Guarulhos (SP).",
+  },
+  {
+    q: "Você executa ou só entrega o plano?",
+    a: "Os dois. Posso entregar só o plano (mapa do próximo passo) ou executar site, copy e automação junto. Você decide o nível de envolvimento.",
+  },
+];
+
 const Index = () => {
+  useEffect(() => {
+    const data = {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      mainEntity: faqs.map((f) => ({
+        "@type": "Question",
+        name: f.q,
+        acceptedAnswer: { "@type": "Answer", text: f.a },
+      })),
+    };
+    const script = document.createElement("script");
+    script.type = "application/ld+json";
+    script.id = "faq-jsonld";
+    script.text = JSON.stringify(data);
+    document.head.appendChild(script);
+    return () => {
+      document.getElementById("faq-jsonld")?.remove();
+    };
+  }, []);
+
   return (
     <>
       <Preloader />
@@ -191,6 +236,36 @@ const Index = () => {
                 </Reveal>
               ))}
             </ul>
+          </div>
+        </section>
+
+        {/* FAQ */}
+        <section id="faq" className="border-t border-border bg-secondary/40 py-24 md:py-32">
+          <div className="container-edge grid gap-12 md:grid-cols-12 md:gap-16">
+            <Reveal className="md:col-span-5">
+              <span className="eyebrow">Perguntas frequentes</span>
+              <h2 className="mt-4 font-display text-3xl font-bold leading-tight md:text-5xl">
+                Direto ao que você quer saber.
+              </h2>
+              <p className="mt-6 text-base text-muted-foreground">
+                Se a resposta não estiver aqui, manda no WhatsApp. Eu respondo.
+              </p>
+            </Reveal>
+
+            <Reveal delay={0.15} className="md:col-span-7">
+              <Accordion type="single" collapsible className="w-full">
+                {faqs.map((f, i) => (
+                  <AccordionItem key={f.q} value={`item-${i}`} className="border-border">
+                    <AccordionTrigger className="text-left font-display text-lg font-semibold hover:text-amber hover:no-underline md:text-xl">
+                      {f.q}
+                    </AccordionTrigger>
+                    <AccordionContent className="text-base leading-relaxed text-muted-foreground">
+                      {f.a}
+                    </AccordionContent>
+                  </AccordionItem>
+                ))}
+              </Accordion>
+            </Reveal>
           </div>
         </section>
 
